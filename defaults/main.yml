@@ -1,5 +1,4 @@
 ---
-
 # Pi-hole
 pihole_force_reinstall: false
 pihole_password: ""
