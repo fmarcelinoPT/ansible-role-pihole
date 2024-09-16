@@ -5,11 +5,13 @@
     msg: "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
     
 - name: Include distribution and version-specific vars
-  include_vars: "{{ item }}"
+  include_vars: "{{ version_specific }}"
   with_first_found:
     - files:
         - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
       skip: true
+  loop_control:
+    loop_var: version_specific
 
 - name: Define pihole_required_packages
   set_fact:

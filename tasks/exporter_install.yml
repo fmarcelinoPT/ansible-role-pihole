@@ -18,12 +18,14 @@
 - name: Ensure skeleton paths
   become: true
   file:
-    dest: "{{ item }}"
+    dest: "{{ skeleton_path }}"
     owner: "{{ pihole_exporter_user }}"
     group: "{{ pihole_exporter_group }}"
     state: directory
   with_items:
     - "{{ pihole_exporter_skeleton_paths }}"
+  loop_control:
+    loop_var: skeleton_path
 
 - name: Check pihole_exporter version
   become: true
