@@ -1,17 +1,20 @@
 ---
 
 - name: Install dependencies
+  become: true
   apt:
     name: "{{ pihole_required_packages }}"
     state: present
     update-cache: yes
 
 - name: Ensure config path
+  become: true
   file:
     dest: /etc/pihole
     state: directory
 
 - name: Copy setup vars
+  become: true
   template:
     src: setupVars.conf.j2
     dest: /etc/pihole/setupVars.conf
@@ -23,5 +26,6 @@
     mode: 0755
 
 - name: Run install script
+  become: true
   command: /tmp/pihole-install.sh --unattended
   changed_when: true

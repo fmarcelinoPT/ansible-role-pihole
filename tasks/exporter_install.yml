@@ -1,12 +1,13 @@
 ---
-
 - name: Ensure pihole_exporter group
+  become: true
   group:
     name: "{{ pihole_exporter_group }}"
     system: yes
     state: present
 
 - name: Ensure pihole_exporter user
+  become: true
   user:
     name: "{{ pihole_exporter_user }}"
     group: "{{ pihole_exporter_group }}"
@@ -15,21 +16,26 @@
     createhome: no
 
 - name: Ensure skeleton paths
+  become: true
   file:
-    dest: "{{ item }}"
+    dest: "{{ skeleton_path }}"
     owner: "{{ pihole_exporter_user }}"
     group: "{{ pihole_exporter_group }}"
     state: directory
   with_items:
     - "{{ pihole_exporter_skeleton_paths }}"
+  loop_control:
+    loop_var: skeleton_path
 
 - name: Check pihole_exporter version
+  become: true
   command: pihole_exporter --help
   register: pihole_exporter_check
   changed_when: false
   ignore_errors: true
 
 - name: Download package
+  become: true
   get_url:
     url: "{{ pihole_exporter_url }}"
     dest: "{{ pihole_exporter_bin_path }}/{{ pihole_exporter_exec_name }}-{{ pihole_exporter_version }}"
@@ -39,6 +45,7 @@
   when: pihole_exporter_force_reinstall or pihole_exporter_check is failed
 
 - name: Create symbolic link
+  become: true
   file:
     src: "{{ pihole_exporter_bin_path }}/{{ pihole_exporter_exec_name }}-{{ pihole_exporter_version }}"
     dest: /usr/bin/pihole_exporter
