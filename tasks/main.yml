@@ -1,5 +1,9 @@
 ---
 
+- name: Display witch vars Debian will be used
+  debug:
+    msg: "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    
 - name: Include distribution and version-specific vars
   include_vars: "{{ item }}"
   with_first_found:
