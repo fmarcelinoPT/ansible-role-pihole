@@ -21,7 +21,7 @@ pihole_lighttpd_enabled: true
 # Pi-Hole Exporter
 pihole_exporter_install: true
 pihole_exporter_force_reinstall: false
-pihole_exporter_version: v0.0.11
+pihole_exporter_version: v0.4.0 # v0.0.11
 pihole_exporter_arch: "{{ __pihole_exporter_arch }}"
 pihole_exporter_url: "https://github.com/eko/pihole-exporter/releases/download/{{ pihole_exporter_version }}/pihole_exporter-linux-{{ pihole_exporter_arch }}"
 
